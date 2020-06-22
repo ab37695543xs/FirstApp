@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 
 main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   void answerFunction() {
-    _questionIndex = (_questionIndex >= 2) ? 0 : _questionIndex+1;
+    setState(() {
+      _questionIndex = (_questionIndex >= 1) ? 0 : _questionIndex + 1;
+    });
     print(_questionIndex);
   }
+
   var _questionIndex = 0;
   var _questionList = [
     'What\'s your favorite color?',
