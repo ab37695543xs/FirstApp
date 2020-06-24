@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import './question.dart';
+import './quiz.dart';
+import './result.dart';
 
 main() => runApp(MyApp());
 
@@ -9,14 +10,23 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  void _answerFunction() {
+  int _questionIndex = 0;
+  final int _questionLen = 3;
+
+  void _ansFunc() {
     setState(() {
-      _questionIndex = (_questionIndex >= 1) ? 0 : _questionIndex + 1;
+      _questionIndex++;
     });
     print(_questionIndex);
   }
 
-  int _questionIndex = 0;
+  Widget _buildChild() {
+    if (_questionIndex < _questionLen) {
+      return Quiz(_ansFunc, _questionIndex);
+    } else {
+      return Result();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +34,9 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         home: Scaffold(
           appBar: AppBar(
-            title: Text('First App'),
+            title: Text('Quiz App'),
           ),
-          body: Column(
-            children: [
-              Question(_questionIndex),
-              RaisedButton(child: Text('Answer 1'), onPressed: _answerFunction),
-              RaisedButton(child: Text('Answer 2'), onPressed: _answerFunction),
-              RaisedButton(child: Text('Answer 3'), onPressed: _answerFunction),
-            ],
-          ),
+          body: _buildChild(),
         ),
       ),
     );
